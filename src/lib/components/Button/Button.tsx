@@ -33,7 +33,10 @@ export interface FlowbiteButtonTheme {
 }
 
 export interface ButtonColors
-  extends Pick<FlowbiteColors, 'dark' | 'failure' | 'gray' | 'info' | 'light' | 'purple' | 'success' | 'warning'> {
+  extends Pick<
+    FlowbiteColors,
+    'default' | 'ghost' | 'dark' | 'failure' | 'gray' | 'info' | 'light' | 'purple' | 'success' | 'warning'
+  > {
   [key: string]: string;
 }
 
@@ -70,7 +73,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement | HTMLAnchorElement, Button
   (
     {
       children,
-      color = 'info',
+      color = 'default',
       disabled = false,
       gradientDuoTone,
       gradientMonochrome,

@@ -165,10 +165,10 @@ const theme: FlowbiteTheme = {
     },
     item: {
       base: 'group flex items-center',
-      chevron: 'mx-1 h-6 w-6 text-gray-400 group-first:hidden md:mx-2',
+      chevron: 'mx-1 h-4 w-5 text-gray-400 group-first:hidden md:mx-2',
       href: {
-        off: 'flex items-center text-sm font-medium text-gray-500 dark:text-gray-400',
-        on: 'flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white',
+        off: 'flex items-center text-sm font-medium text-gray-700 dark:text-gray-400',
+        on: 'flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white',
       },
       icon: 'mr-2 h-4 w-4',
     },
@@ -177,6 +177,10 @@ const theme: FlowbiteTheme = {
     base: 'group flex h-min items-center justify-center p-0.5 text-center font-medium focus:z-10',
     fullSized: 'w-full',
     color: {
+      default:
+        'text-white bg-alr-red border border-transparent hover:bg-red-800 focus:ring-4 focus:ring-red-300 disabled:hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
+      ghost:
+        'text-gray-900 bg-[#F5F5F5] border-transparent outline-none hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
       dark: 'text-white bg-gray-800 border border-transparent hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 disabled:hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:disabled:hover:bg-gray-800',
       failure:
         'text-white bg-red-700 border border-transparent hover:bg-red-800 focus:ring-4 focus:ring-red-300 disabled:hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',

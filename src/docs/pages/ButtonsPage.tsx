@@ -14,6 +14,12 @@ const ButtonsPage: FC = () => {
             <Button>Default</Button>
           </div>
           <div>
+            <Button color="ghost">Ghost</Button>
+          </div>
+          <div>
+            <Button color="info">Info</Button>
+          </div>
+          <div>
             <Button color="gray">Gray</Button>
           </div>
           <div>
