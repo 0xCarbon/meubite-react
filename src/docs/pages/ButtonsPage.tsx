@@ -17,6 +17,9 @@ const ButtonsPage: FC = () => {
             <Button color="ghost">Ghost</Button>
           </div>
           <div>
+            <Button color="transparent">Transparent</Button>
+          </div>
+          <div>
             <Button color="info">Info</Button>
           </div>
           <div>
@@ -247,6 +250,11 @@ const ButtonsPage: FC = () => {
       title: 'Icon buttons',
       code: (
         <div className="flex flex-wrap items-center gap-2">
+          <div>
+            <Button color="transparent" pill size="sm-rounded" className="p-3">
+              <HiShoppingCart className="h-4 w-4 text-gray-900" />
+            </Button>
+          </div>
           <div>
             <Button>
               <HiOutlineArrowRight className="h-6 w-6" />

@@ -28,7 +28,7 @@ const theme: FlowbiteTheme = {
       heading: '',
       open: {
         off: '',
-        on: 'text-gray-900 bg-gray-100 dark:bg-gray-800 dark:text-white',
+        on: 'text-gray-900 dark:bg-gray-800 dark:text-white',
       },
     },
   },
@@ -178,9 +178,11 @@ const theme: FlowbiteTheme = {
     fullSized: 'w-full',
     color: {
       default:
-        'text-white bg-alr-red border border-transparent hover:bg-red-800 focus:ring-4 focus:ring-red-300 disabled:hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
+        'text-white bg-alr-red border border-transparent hover:bg-red-900 focus:ring-2 focus:ring-red-300 disabled:hover:bg-red-900 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
       ghost:
         'text-gray-900 bg-[#F5F5F5] border-transparent outline-none hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
+      transparent:
+        'text-gray-900 bg-transparent border-transparent outline-none hover:bg-[#F5F5F5] hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
       dark: 'text-white bg-gray-800 border border-transparent hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 disabled:hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:disabled:hover:bg-gray-800',
       failure:
         'text-white bg-red-700 border border-transparent hover:bg-red-800 focus:ring-4 focus:ring-red-300 disabled:hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
@@ -257,10 +259,15 @@ const theme: FlowbiteTheme = {
     },
     size: {
       xs: 'text-xs px-2 py-1',
+      'xs-rounded': 'text-xs p-1.5',
       sm: 'text-sm px-3 py-1.5',
+      'sm-rounded': 'text-xs p-2',
       md: 'text-sm px-4 py-2',
+      'md-rounded': 'text-xs p-3',
       lg: 'text-base px-5 py-2.5',
+      'lg-rounded': 'text-xs p-4',
       xl: 'text-base px-6 py-3',
+      'xl-rounded': 'text-xs p-5',
     },
   },
   buttonGroup: {
@@ -385,7 +392,7 @@ const theme: FlowbiteTheme = {
     },
   },
   checkbox: {
-    base: 'h-4 w-4 rounded border border-gray-300 bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600',
+    base: 'h-4 w-4 text-alr-red rounded border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600',
   },
   fileInput: {
     base: 'flex',
@@ -877,6 +884,8 @@ const theme: FlowbiteTheme = {
         default: 'flex-wrap border-b border-gray-200 dark:border-gray-700',
         underline: 'flex-wrap -mb-px border-b border-gray-200 dark:border-gray-700',
         pills: 'flex-wrap font-medium text-sm text-gray-500 dark:text-gray-400',
+        rounded:
+          'w-full text-gray-500 bg-gray-50 text-sm font-medium rounded-l-lg rounded-r-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400',
         fullWidth:
           'hidden text-sm font-medium rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400',
       },
@@ -893,7 +902,7 @@ const theme: FlowbiteTheme = {
           underline: {
             base: 'rounded-t-lg',
             active: {
-              on: 'text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500',
+              on: 'text-alr-red rounded-t-lg border-b-2 border-alr-red active dark:text-blue-500 dark:border-blue-500',
               off: 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300',
             },
           },
@@ -902,6 +911,13 @@ const theme: FlowbiteTheme = {
             active: {
               on: 'rounded-lg bg-blue-600 text-white',
               off: 'rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white',
+            },
+          },
+          rounded: {
+            base: 'w-full',
+            active: {
+              on: 'w-full text-alr-red inline-block p-4 text-gray-900 focus:ring-4 focus:ring-red-300 active focus:outline-none dark:bg-gray-700 dark:text-white',
+              off: 'w-full hover:text-alr-red focus:ring-4 focus:ring-red-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700',
             },
           },
           fullWidth: {
