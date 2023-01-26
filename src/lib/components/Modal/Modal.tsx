@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
-import { useEffect, useState } from 'react';
+import { ComponentProps, FC, MouseEvent, PropsWithChildren, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useKeyDown } from '../../hooks';
 import type { FlowbiteBoolean, FlowbitePositions, FlowbiteSizes } from '../Flowbite/FlowbiteTheme';
 import { useTheme } from '../Flowbite/ThemeContext';
 import { ModalBody } from './ModalBody';
@@ -52,65 +52,79 @@ export interface ModalProps extends PropsWithChildren<ComponentProps<'div'>> {
   root?: HTMLElement;
   show?: boolean;
   size?: keyof ModalSizes;
+  dismissible?: boolean;
 }
 
 const ModalComponent: FC<ModalProps> = ({
   children,
   show,
-  root,
+  root = document.body,
   popup,
   size = '2xl',
   position = 'center',
+  dismissible = false,
   onClose,
   className,
   ...props
 }) => {
-  const [parent, setParent] = useState<HTMLElement | undefined>(root);
-  const [container, setContainer] = useState<HTMLDivElement | undefined>();
   const theme = useTheme().theme.modal;
+  // Declare a ref to store a reference to a div element.
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // If the current value of the ref is falsy (e.g. null), set it to a new div
+  // element.
+  if (!containerRef.current) {
+    containerRef.current = document.createElement('div');
+  }
+
+  // If the current value of the ref is not already a child of the root element,
+  // append it or replace its parent.
+  if (containerRef.current.parentNode !== root) {
+    root.appendChild(containerRef.current);
+  }
 
   useEffect(() => {
-    if (!parent) setParent(document.body);
-    if (!container) setContainer(document.createElement('div'));
-  }, []);
-
-  useEffect(() => {
-    if (!container || !parent || !show) {
-      return;
-    }
-
-    parent.appendChild(container);
-
     return () => {
+      const container = containerRef.current;
+
+      // If a container exists on unmount, it is removed from the DOM and
+      // garbage collected.
       if (container) {
-        parent.removeChild(container);
+        container.parentNode?.removeChild(container);
+        containerRef.current = null;
       }
     };
-  }, [container, parent, show]);
+  }, []);
 
-  return container
-    ? createPortal(
-        <ModalContext.Provider value={{ popup, onClose }}>
-          <div
-            aria-hidden={!show}
-            className={classNames(
-              theme.base,
-              theme.positions[position],
-              show ? theme.show.on : theme.show.off,
-              className,
-            )}
-            data-testid="modal"
-            role="dialog"
-            {...props}
-          >
-            <div className={classNames(theme.content.base, theme.sizes[size])}>
-              <div className={theme.content.inner}>{children}</div>
-            </div>
-          </div>
-        </ModalContext.Provider>,
-        container,
-      )
-    : null;
+  useKeyDown('Escape', () => {
+    if (dismissible && onClose) {
+      onClose();
+    }
+  });
+
+  const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (dismissible && e.target === e.currentTarget && onClose) {
+      onClose();
+    }
+  };
+
+  return createPortal(
+    <ModalContext.Provider value={{ popup, onClose }}>
+      <div
+        aria-hidden={!show}
+        className={classNames(theme.base, theme.positions[position], show ? theme.show.on : theme.show.off, className)}
+        data-testid="modal"
+        role="dialog"
+        onClick={handleOnClick}
+        {...props}
+      >
+        <div className={classNames(theme.content.base, theme.sizes[size])}>
+          <div className={theme.content.inner}>{children}</div>
+        </div>
+      </div>
+    </ModalContext.Provider>,
+    containerRef.current,
+  );
 };
 
 ModalComponent.displayName = 'Modal';

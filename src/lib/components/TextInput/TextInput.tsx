@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import type { ComponentProps, FC, ReactNode } from 'react';
 import { forwardRef } from 'react';
+import { DeepPartial } from '..';
+import { mergeDeep } from '../../helpers/mergeDeep';
 import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes } from '../Flowbite/FlowbiteTheme';
 import { useTheme } from '../Flowbite/ThemeContext';
 import { HelperText } from '../HelperText';
@@ -14,11 +16,16 @@ export interface FlowbiteTextInputTheme {
       base: string;
       svg: string;
     };
+    rightIcon: {
+      base: string;
+      svg: string;
+    };
     input: {
       base: string;
       sizes: TextInputSizes;
       colors: TextInputColors;
       withIcon: FlowbiteBoolean;
+      withRightIcon: FlowbiteBoolean;
       withAddon: FlowbiteBoolean;
       withShadow: FlowbiteBoolean;
     };
@@ -39,12 +46,29 @@ export interface TextInputProps extends Omit<ComponentProps<'input'>, 'ref' | 'c
   helperText?: ReactNode;
   addon?: ReactNode;
   icon?: FC<ComponentProps<'svg'>>;
+  rightIcon?: FC<ComponentProps<'svg'>>;
   color?: keyof TextInputColors;
+  theme?: DeepPartial<FlowbiteTextInputTheme>;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ sizing = 'md', shadow, helperText, addon, icon: Icon, color = 'gray', className, ...props }, ref) => {
-    const theme = useTheme().theme.textInput;
+  (
+    {
+      sizing = 'md',
+      shadow,
+      helperText,
+      addon,
+      icon: Icon,
+      rightIcon: RightIcon,
+      color = 'gray',
+      className,
+      theme: customTheme = {},
+      ...props
+    },
+    ref,
+  ) => {
+    const theme = mergeDeep(useTheme().theme.textInput, customTheme);
+
     return (
       <>
         <div className={classNames(theme.base, className)}>
@@ -53,6 +77,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             {Icon && (
               <div className={theme.field.icon.base}>
                 <Icon className={theme.field.icon.svg} />
+              </div>
+            )}
+            {RightIcon && (
+              <div data-testid="right-icon" className={theme.field.rightIcon.base}>
+                <RightIcon className={theme.field.rightIcon.svg} />
               </div>
             )}
             <input

@@ -1,12 +1,77 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { describe, expect, it } from 'vitest';
 import { Button } from '../Button';
+import { TextInput } from '../TextInput';
 import type { ModalProps } from './Modal';
 import { Modal } from './Modal';
 
 describe('Components / Modal', () => {
+  it('should automatically focus the `TextInput` inside the `Modal` when its opened', async () => {
+    const root = document.createElement('div');
+    const user = userEvent.setup();
+
+    render(<TestModal root={root} />);
+
+    const openButton = screen.getByRole('button');
+
+    await user.click(openButton);
+
+    const modal = within(root).getByRole('dialog');
+    const input = within(modal).getByTestId('text-input');
+
+    waitFor(() => expect(input).toHaveFocus());
+  });
+
+  it('should be removed from DOM and garbage collected', async () => {
+    const root = document.createElement('div');
+
+    const { unmount } = render(<TestModal root={root} />);
+
+    unmount();
+
+    await waitFor(() => expect(root.childNodes.length).toBe(0));
+  });
+
+  it('should be closed by clicking outside if the "dismissible" prop is passed.', async () => {
+    const root = document.createElement('div');
+    const user = userEvent.setup();
+
+    render(<TestModal root={root} dismissible />);
+
+    const openButton = screen.getByRole('button');
+
+    await user.click(openButton);
+
+    const modal = within(root).getByRole('dialog');
+
+    expect(modal).toHaveAttribute('aria-hidden', 'false');
+
+    await user.click(modal);
+
+    expect(modal).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  it('should be closed by Esc key press.', async () => {
+    const root = document.createElement('div');
+    const user = userEvent.setup();
+
+    render(<TestModal root={root} dismissible />);
+
+    const openButton = screen.getByRole('button');
+
+    await user.click(openButton);
+
+    const modal = within(root).getByRole('dialog');
+
+    expect(modal).toHaveAttribute('aria-hidden', 'false');
+
+    await user.keyboard('[Escape]');
+
+    expect(modal).toHaveAttribute('aria-hidden', 'true');
+  });
+
   describe('A11y', () => {
     it('should have `role="dialog"`', async () => {
       const user = userEvent.setup();
@@ -63,13 +128,22 @@ describe('Components / Modal', () => {
   });
 });
 
-const TestModal = ({ root }: Pick<ModalProps, 'root'>): JSX.Element => {
+const TestModal = ({ root, dismissible = false }: Pick<ModalProps, 'root' | 'dismissible'>): JSX.Element => {
   const [open, setOpen] = useState(false);
+
+  const setInputRef = useCallback(
+    (input: HTMLInputElement) => {
+      if (open && input) {
+        input.focus();
+      }
+    },
+    [open],
+  );
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Toggle modal</Button>
-      <Modal root={root} show={open} onClose={() => setOpen(false)}>
+      <Modal dismissible={dismissible} root={root} show={open} onClose={() => setOpen(false)}>
         <Modal.Header>Terms of Service</Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
@@ -83,6 +157,7 @@ const TestModal = ({ root }: Pick<ModalProps, 'root'>): JSX.Element => {
               soon as possible of high-risk data breaches that could personally affect them.
             </p>
           </div>
+          <TextInput data-testid="text-input" ref={setInputRef} autoFocus />
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => setOpen(false)}>I accept</Button>
