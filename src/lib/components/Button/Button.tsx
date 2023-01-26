@@ -35,17 +35,7 @@ export interface FlowbiteButtonTheme {
 export interface ButtonColors
   extends Pick<
     FlowbiteColors,
-    | 'default'
-    | 'ghost'
-    | 'transparent'
-    | 'dark'
-    | 'failure'
-    | 'gray'
-    | 'info'
-    | 'light'
-    | 'purple'
-    | 'success'
-    | 'warning'
+    'default' | 'ghost' | 'dark' | 'failure' | 'gray' | 'info' | 'light' | 'purple' | 'success' | 'warning'
   > {
   [key: string]: string;
 }
