@@ -82,6 +82,18 @@ const TabsPage: FC = () => {
       codeClassName: 'dark:!bg-gray-900',
     },
     {
+      title: 'Rounded tabs',
+      code: (
+        <Tabs.Group aria-label="Rounded tabs" style="rounded">
+          <Tabs.Item title="Profile">Profile content</Tabs.Item>
+          <Tabs.Item title="Dashboard">Dashboard content</Tabs.Item>
+          <Tabs.Item title="Settings">Settings content</Tabs.Item>
+          <Tabs.Item title="Invoice">Invoice content</Tabs.Item>
+        </Tabs.Group>
+      ),
+      codeClassName: 'dark:!bg-gray-900',
+    },
+    {
       title: 'Full width tabs',
       code: (
         <Tabs.Group aria-label="Full width tabs" style="fullWidth">

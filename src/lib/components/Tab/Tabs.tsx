@@ -25,6 +25,7 @@ export interface TabStyles {
   underline: string;
   pills: string;
   fullWidth: string;
+  rounded: string;
 }
 
 export interface TabStyleItemProps {
