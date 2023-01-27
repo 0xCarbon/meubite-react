@@ -887,7 +887,7 @@ const theme: FlowbiteTheme = {
           rounded: {
             base: 'w-full',
             active: {
-              on: 'w-full text-alr-red inline-block p-4 text-gray-900 active dark:bg-gray-700 dark:text-white',
+              on: 'w-full text-alr-red inline-block p-4 active dark:bg-gray-700 dark:text-white',
               off: 'w-full hover:text-alr-red dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700',
             },
           },
