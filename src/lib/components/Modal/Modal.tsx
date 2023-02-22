@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ComponentProps, FC, MouseEvent, PropsWithChildren, useEffect, useRef } from 'react';
+import { ComponentProps, FC, MouseEvent, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useKeyDown } from '../../hooks';
 import type { FlowbiteBoolean, FlowbitePositions, FlowbiteSizes } from '../Flowbite/FlowbiteTheme';
@@ -58,7 +58,7 @@ export interface ModalProps extends PropsWithChildren<ComponentProps<'div'>> {
 const ModalComponent: FC<ModalProps> = ({
   children,
   show,
-  root = document.body,
+  root,
   popup,
   size = '2xl',
   position = 'center',
@@ -67,21 +67,22 @@ const ModalComponent: FC<ModalProps> = ({
   className,
   ...props
 }) => {
+  const [rootUsed, setRootUsed] = useState(root);
   const theme = useTheme().theme.modal;
   // Declare a ref to store a reference to a div element.
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // If the current value of the ref is falsy (e.g. null), set it to a new div
-  // element.
-  if (!containerRef.current) {
-    containerRef.current = document.createElement('div');
-  }
+  useEffect(() => {
+    if (!rootUsed && document?.body) {
+      setRootUsed(document.body);
+    }
+  }, [rootUsed]);
 
-  // If the current value of the ref is not already a child of the root element,
-  // append it or replace its parent.
-  if (containerRef.current.parentNode !== root) {
-    root.appendChild(containerRef.current);
-  }
+  useEffect(() => {
+    if (document) {
+      document.body.style.overflow = show ? 'hidden' : 'auto';
+    }
+  }, [show]);
 
   useEffect(() => {
     return () => {
@@ -101,6 +102,22 @@ const ModalComponent: FC<ModalProps> = ({
       onClose();
     }
   });
+
+  if (!rootUsed) {
+    return null;
+  }
+
+  // If the current value of the ref is falsy (e.g. null), set it to a new div
+  // element.
+  if (!containerRef.current) {
+    containerRef.current = document.createElement('div');
+  }
+
+  // If the current value of the ref is not already a child of the root element,
+  // append it or replace its parent.
+  if (containerRef.current.parentNode !== rootUsed) {
+    rootUsed.appendChild(containerRef.current);
+  }
 
   const handleOnClick = (e: MouseEvent<HTMLDivElement>) => {
     if (dismissible && e.target === e.currentTarget && onClose) {
