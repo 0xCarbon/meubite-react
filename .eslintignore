@@ -1,6 +1,2 @@
-*.md
-.gitignore
-build/
-coverage/
-lib/
-docs/
+storybook-static
+cypress.config.ts
