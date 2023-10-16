@@ -1,8 +1,6 @@
 import { CodePreview } from '~/app/components/code-preview';
 import { Button, Spinner, theme } from '~/src';
 
-## Table of Contents
-
 The spinner component should be used to indicate a loading status of the content that you're fetching from your database and you can choose from multiple styles, colors, sizes, and animations based on React and Tailwind CSS.
 
 Import the spinner component from Flowbite React to start using it in your project:
@@ -12,6 +10,8 @@ Import the spinner component from Flowbite React to start using it in your proje
 
 import { Spinner } from 'flowbite-react';
 ```
+
+## Table of Contents
 
 ## Default spinner
 
@@ -68,11 +68,11 @@ Add the loading spinner inside a button to indicate fetching status directly ins
 
 <CodePreview importFlowbiteReact="Button, Spinner" title="Buttons" className="flex flex-row gap-3">
   <Button>
-    <Spinner aria-label="Spinner button example" />
+    <Spinner aria-label="Spinner button example" size="sm" />
     <span className="pl-3">Loading...</span>
   </Button>
   <Button color="gray">
-    <Spinner aria-label="Alternate spinner button example" />
+    <Spinner aria-label="Alternate spinner button example" size="sm" />
     <span className="pl-3">Loading...</span>
   </Button>
 </CodePreview>

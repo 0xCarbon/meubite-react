@@ -14,7 +14,7 @@ import { Tooltip } from '~/src';
 const reactElementToJSXStringOptions: Options = {
   filterProps: ['key', 'ref'],
   showFunctions: true,
-  sortProps: true,
+  useBooleanShorthandSyntax: false,
 };
 
 interface CodePreviewProps extends PropsWithChildren, ComponentProps<'div'> {
@@ -32,7 +32,7 @@ interface CodePreviewState {
   isJustCopied?: boolean;
 }
 
-export const CodePreview: FC<CodePreviewProps> = function ({
+export const CodePreview: FC<CodePreviewProps> = ({
   children,
   className,
   code = '',
@@ -41,7 +41,7 @@ export const CodePreview: FC<CodePreviewProps> = function ({
   importExternal,
   importFlowbiteReact,
   title,
-}) {
+}) => {
   const [isDarkMode, setDarkMode] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
   const [isJustCopied, setJustCopied] = useState(false);
@@ -62,6 +62,7 @@ export const CodePreview: FC<CodePreviewProps> = function ({
   code = deleteJSXSpaces(code);
   code = deleteSVGs(code);
   code = replaceWebpackImportsOnFunctions(code);
+  code = explicitTruthyPropsToShorthandSyntax(code);
   code = `'use client';
 
 import { ${importFlowbiteReact ?? firstComponentDisplayName(code)} } from 'flowbite-react';
@@ -230,4 +231,8 @@ const slugToUpperCamelCase = (str: string) => {
     .replaceAll(/-/g, ' ')
     .replaceAll(/\b[a-z]/g, (letter) => letter.toUpperCase())
     .replaceAll(/\s/g, '');
+};
+
+const explicitTruthyPropsToShorthandSyntax = (str: string) => {
+  return str.replaceAll(/={true}/g, '');
 };

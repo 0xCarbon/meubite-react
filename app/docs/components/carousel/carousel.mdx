@@ -1,8 +1,6 @@
 import { CodePreview } from '~/app/components/code-preview';
 import { Carousel, theme } from '~/src';
 
-## Table of Contents
-
 Use the responsive carousel component to allow users to slide through multiple items and navigate between them using the control buttons and indicators.
 
 Choose from multiple examples and options to update the intervals, make the carousel static and set custom control button and indicator by configuring React and the utility classes from Tailwind CSS.
@@ -14,6 +12,8 @@ To start using the carousel component you first need to import it from Flowbite 
 
 import { Carousel } from 'flowbite-react';
 ```
+
+## Table of Contents
 
 ## Default carousel
 
@@ -84,6 +84,20 @@ Add custom indicators or disable them by passing the `indicators` prop to the `<
     <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
   </Carousel>
   <Carousel indicators={false}>
+    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
+    <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
+    <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
+    <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
+    <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+  </Carousel>
+</CodePreview>
+
+## Pause On Hover
+
+To conditionally pause the carousel on mouse hover (desktop), or touch and hold (mobile), you can use the `pauseOnHover` property on the `<Carousel>` component. Default value is `false`.
+
+<CodePreview title="Pause on hovering" className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+  <Carousel pauseOnHover>
     <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
     <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
     <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />

@@ -1,5 +1,6 @@
 'use client';
 
+import { DocSearch } from '@docsearch/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
@@ -7,7 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 import { HiClipboardCopy, HiOutlineArrowRight } from 'react-icons/hi';
 import '~/app/docs.css';
 import '~/app/style.css';
-import { Button, Flowbite, Footer, Navbar, TextInput, Tooltip } from '~/src';
+import { Button, Flowbite, Footer, Navbar, TextInput, Tooltip, useTheme } from '~/src';
+import { Banner } from './components/banner';
 import { ComponentCard } from './components/component-card';
 import { NavbarIcons, NavbarLinks } from './components/navbar';
 import { COMPONENTS_DATA } from './data/components';
@@ -63,6 +65,7 @@ export default function HomePageContent() {
   return (
     <Flowbite>
       <div className="relative max-h-screen w-full overflow-auto bg-white text-gray-600 antialiased dark:bg-gray-900 dark:text-gray-400">
+        <Banner />
         <HomeNavbar />
         <div className="lg:flex">
           <main
@@ -90,9 +93,9 @@ const HomeNavbar: FC = () => {
   return (
     <Navbar
       theme={{
-        base: 'sticky top-0 z-40 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between w-full mx-auto py-4',
+        base: 'sticky top-0 z-40 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between w-full mx-auto py-0',
         inner: {
-          base: 'mx-auto flex flex-wrap justify-between items-center w-full max-w-8xl px-4 lg:px-20',
+          base: 'mx-auto flex flex-wrap justify-between items-center w-full xl:max-w-8xl px-4 py-2.5 xl:px-20 max-w-none',
         },
       }}
     >
@@ -108,9 +111,14 @@ const HomeNavbar: FC = () => {
           <Image alt="" aria-hidden height="32" src="/favicon.svg" width="32" />
           <span>Flowbite React</span>
         </Link>
+        <div className="ml-4 hidden lg:flex">
+          <DocSearch appId="4ECQXWXLSO" indexName="flowbite-react" apiKey="9c32f687c9058e3d3f27adff654d48d9" />
+        </div>
       </div>
-      <NavbarLinks />
-      <NavbarIcons />
+      <div className="flex items-center">
+        <NavbarLinks />
+        <NavbarIcons />
+      </div>
     </Navbar>
   );
 };
@@ -120,29 +128,29 @@ const HeroSection: FC = () => {
 
   const copyToClipboard = () => {
     setJustCopied(true);
-    navigator.clipboard.writeText('npm i flowbite flowbite-react');
+    navigator.clipboard.writeText('npm i flowbite-react');
     setTimeout(() => setJustCopied(false), 2000);
   };
 
   return (
     <section className="mx-auto flex max-w-8xl flex-col overflow-hidden px-4 pb-6 pt-6 sm:pb-8 sm:pt-8 lg:px-20 lg:pb-24 lg:pt-16">
       <div className="flex flex-col gap-20">
-        <div className="flex items-center gap-10">
-          <div className="flex max-w-[676px] flex-col justify-start gap-4">
+        <div className="grid gap-10 md:grid-cols-2">
+          <div className="flex flex-col justify-start gap-4 xl:max-w-[676px]">
             <div className="flex flex-col gap-4 text-left lg:gap-6">
-              <h1 className="max-w-xl text-4xl font-extrabold leading-none text-gray-900 dark:text-white lg:text-6xl">
+              <h1 className="max-w-3xl text-4xl font-extrabold leading-none text-gray-900 dark:text-white lg:text-5xl xl:text-6xl">
                 <span className="xl:inline">Build modern web applications with</span>
                 <span className="ml-2 text-cyan-700 dark:text-cyan-700 xl:inline">Flowbite React</span>
               </h1>
-              <p className="max-w-xl text-lg leading-normal text-gray-500 dark:text-gray-400 lg:text-xl">
+              <p className="max-w-3xl text-lg leading-normal text-gray-500 dark:text-gray-400 lg:text-xl">
                 Flowbite React is an open-source UI component library built on top of Tailwind CSS with React components
                 and based on the Flowbite Design System.
               </p>
-              <div className="mt-6 grid grid-cols-1 items-center justify-center gap-6 lg:grid-cols-2 [&>div:first-child]:w-full">
+              <div className="mt-2 grid grid-cols-1 items-center justify-center gap-4 sm:grid-cols-2 sm:gap-6 [&>div:first-child]:w-full">
                 <Tooltip content={isJustCopied ? 'Copied!' : 'Copy to clipboard'} className="[&_*]:cursor-pointer">
                   <TextInput
                     onClick={copyToClipboard}
-                    placeholder="npm i flowbite flowbite-react"
+                    placeholder="npm i flowbite-react"
                     readOnly
                     rightIcon={HiClipboardCopy}
                     sizing="md"
@@ -165,19 +173,19 @@ const HeroSection: FC = () => {
                 <div className="justify-center sm:flex sm:justify-start">
                   <div className="mx-0 flex flex-row items-center gap-4 sm:gap-6">
                     <Button href="/docs/getting-started/introduction" size="lg" className="w-full whitespace-nowrap">
-                      Get started <HiOutlineArrowRight className="ml-2 h-5 w-5" />
+                      Get started <HiOutlineArrowRight className="ml-2 mt-1 h-4 w-4" />
                     </Button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="hidden p-0 xl:block">
+          <div className="hidden items-center p-0 md:flex">
             <div className="relative dark:hidden">
-              <img className="max-w-2xl" src="/images/gallery.png" alt="Header" />
+              <img className="h-auto max-w-full" src="/images/gallery.png" alt="Header" />
             </div>
             <div className="relative hidden dark:block">
-              <img className="max-w-2xl" src="/images/gallery-dark.png" alt="Header" />
+              <img className="h-auto max-w-full" src="/images/gallery-dark.png" alt="Header" />
             </div>
           </div>
         </div>
@@ -474,9 +482,12 @@ const DarkModeSection: FC = () => {
               </h2>
               <p className="text-lg text-gray-500 dark:text-gray-400">
                 Flowbite React has native built-in support for{' '}
-                <a href="#" className="text-lg font-medium text-gray-900 underline hover:no-underline dark:text-white">
+                <Link
+                  href="/docs/customize/dark-mode"
+                  className="text-lg font-medium text-gray-900 underline hover:no-underline dark:text-white"
+                >
                   dark mode
-                </a>{' '}
+                </Link>{' '}
                 by using Tailwind CSS and the Flowbite design system.
               </p>
               <p className="text-lg text-gray-500 dark:text-gray-400">
@@ -506,7 +517,7 @@ const DarkModeSection: FC = () => {
                 ))}
               </ul>
               <div className="flex flex-row gap-4">
-                <a
+                <Link
                   href="/docs/customize/dark-mode"
                   className="flex items-center gap-4 font-medium text-cyan-600 hover:underline"
                 >
@@ -519,7 +530,7 @@ const DarkModeSection: FC = () => {
                       fill="currentColor"
                     ></path>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -553,12 +564,12 @@ const TailwindSection: FC = () => {
               </h2>
               <p className="text-lg text-gray-500 dark:text-gray-400">
                 Flowbite React uses the utility classes from Tailwind CSS under the hood and provides an advanced{' '}
-                <a
+                <Link
                   href="/docs/customize/theme"
                   className="text-lg font-medium text-gray-900 underline hover:no-underline dark:text-white"
                 >
                   theming system
-                </a>{' '}
+                </Link>{' '}
                 that you can use to apply classes to UI components and their underlying HTML elements structure.
               </p>
               <p className="text-lg text-gray-500 dark:text-gray-400">
@@ -582,7 +593,7 @@ const TailwindSection: FC = () => {
                 uses this framework in all of the libraries including the vanilla JS, Svelte, Vue, and React one.
               </p>
               <div className="flex flex-row gap-4">
-                <a
+                <Link
                   href="/docs/customize/theme"
                   className="flex items-center gap-4 font-medium text-cyan-600 hover:underline"
                 >
@@ -595,7 +606,7 @@ const TailwindSection: FC = () => {
                       fill="currentColor"
                     ></path>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -849,7 +860,7 @@ const FigmaSection: FC = () => {
   );
 };
 
-const ContributorsSection: FC<ContributorsSectionProps> = function ({ contributors }) {
+const ContributorsSection: FC<ContributorsSectionProps> = ({ contributors }) => {
   return (
     <section>
       <div className="mx-auto max-w-8xl px-4 py-8 lg:px-20 lg:py-24">
@@ -1079,14 +1090,16 @@ const SocialProofSection: FC<SocialProofSectionProps> = ({ stargazers, npmDownlo
   );
 };
 
-// to do: functionality needs to be integrated
 const DarkModeSwitcher: FC = () => {
+  const { toggleMode } = useTheme();
+
   return (
     <div className="text-cyna-500 flex flex-row gap-8">
       <div className="flex flex-col items-center gap-2 font-medium text-gray-900 dark:text-gray-400">
         <button
-          aria-label="Dark mode"
+          aria-label="Light mode"
           type="button"
+          onClick={() => toggleMode?.('light')}
           className="hidden rounded-lg p-2.5 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:block dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
         >
           <span className="hidden dark:block">
@@ -1132,6 +1145,7 @@ const DarkModeSwitcher: FC = () => {
         <button
           aria-label="Dark mode"
           type="button"
+          onClick={() => toggleMode?.('dark')}
           className="rounded-lg bg-gray-100 p-2.5 text-sm text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:hidden dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
         >
           <span className="hidden dark:block">
@@ -1158,7 +1172,7 @@ const DarkModeSwitcher: FC = () => {
 
 const MainFooter: FC = () => {
   return (
-    <Footer className="rounded-none pb-8 pt-16 shadow-none">
+    <Footer className="rounded-none bg-gray-50 pb-8 pt-16 shadow-none">
       <div className="mx-auto w-full max-w-8xl px-4 lg:px-20">
         <div className="grid w-full justify-between gap-8 md:grid-cols-2">
           <div className="mb-4 max-w-sm lg:mb-0">
@@ -1214,7 +1228,7 @@ const MainFooter: FC = () => {
                 title="Help & Support"
                 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white"
               />
-              <Footer.LinkGroup col>
+              <Footer.LinkGroup col className="text-gray-600 dark:text-gray-400">
                 <Footer.Link href="https://discord.gg/4eeurUVvTy" className="text-base">
                   Discord
                 </Footer.Link>
@@ -1228,7 +1242,7 @@ const MainFooter: FC = () => {
                 title="Legal"
                 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white"
               />
-              <Footer.LinkGroup col>
+              <Footer.LinkGroup col className="text-gray-600 dark:text-gray-400">
                 <Footer.Link href="https://flowbite.com/license/" className="text-base">
                   License
                 </Footer.Link>

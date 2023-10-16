@@ -1,9 +1,11 @@
+import { FlowbiteFloatingLabelTheme } from '~/src/components/FloatingLabel/FloatingLabel';
 import type {
   DeepPartial,
   FlowbiteAccordionTheme,
   FlowbiteAlertTheme,
   FlowbiteAvatarTheme,
   FlowbiteBadgeTheme,
+  FlowbiteBlockquoteTheme,
   FlowbiteBreadcrumbTheme,
   FlowbiteButtonGroupTheme,
   FlowbiteButtonTheme,
@@ -11,10 +13,12 @@ import type {
   FlowbiteCarouselTheme,
   FlowbiteCheckboxTheme,
   FlowbiteDarkThemeToggleTheme,
+  FlowbiteDatepickerTheme,
   FlowbiteDropdownTheme,
   FlowbiteFileInputTheme,
   FlowbiteFooterTheme,
   FlowbiteHelperTextTheme,
+  FlowbiteKbdTheme,
   FlowbiteLabelTheme,
   FlowbiteListGroupTheme,
   FlowbiteModalTheme,
@@ -27,10 +31,10 @@ import type {
   FlowbiteSelectTheme,
   FlowbiteSidebarTheme,
   FlowbiteSpinnerTheme,
-  FlowbiteTableTheme,
   FlowbiteTabTheme,
-  FlowbiteTextareaTheme,
+  FlowbiteTableTheme,
   FlowbiteTextInputTheme,
+  FlowbiteTextareaTheme,
   FlowbiteTimelineTheme,
   FlowbiteToastTheme,
   FlowbiteToggleSwitchTheme,
@@ -44,13 +48,16 @@ export interface FlowbiteTheme {
   alert: FlowbiteAlertTheme;
   avatar: FlowbiteAvatarTheme;
   badge: FlowbiteBadgeTheme;
+  blockquote: FlowbiteBlockquoteTheme;
   breadcrumb: FlowbiteBreadcrumbTheme;
   button: FlowbiteButtonTheme;
   buttonGroup: FlowbiteButtonGroupTheme;
   card: FlowbiteCardTheme;
   carousel: FlowbiteCarouselTheme;
+  datepicker: FlowbiteDatepickerTheme;
   darkThemeToggle: FlowbiteDarkThemeToggleTheme;
   footer: FlowbiteFooterTheme;
+  kbd: FlowbiteKbdTheme;
   listGroup: FlowbiteListGroupTheme;
   modal: FlowbiteModalTheme;
   navbar: FlowbiteNavbarTheme;
@@ -65,6 +72,7 @@ export interface FlowbiteTheme {
   dropdown: FlowbiteDropdownTheme;
   checkbox: FlowbiteCheckboxTheme;
   fileInput: FlowbiteFileInputTheme;
+  floatingLabel: FlowbiteFloatingLabelTheme;
   label: FlowbiteLabelTheme;
   radio: FlowbiteRadioTheme;
   rangeSlider: FlowbiteRangeSliderTheme;

@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { HiCheck } from 'react-icons/hi';
 import { theme } from '../../';
 import type { BadgeProps } from './Badge';
@@ -12,10 +12,14 @@ export default {
       options: Object.keys(theme.badge.root.color),
       control: { type: 'inline-radio' },
     },
+    size: {
+      options: Object.keys(theme.badge.root.size),
+      control: { type: 'inline-radio' },
+    },
   },
 } as Meta;
 
-const Template: Story<BadgeProps> = (args) => (
+const Template: StoryFn<BadgeProps> = (args) => (
   <div className="flex items-center">
     <Badge {...args} />
   </div>

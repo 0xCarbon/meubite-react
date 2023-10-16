@@ -1,10 +1,8 @@
 import { CodePreview } from '~/app/components/code-preview';
-import { Button, theme } from '~/src';
+import { Button, TextInput, theme } from '~/src';
 import { HiOutlineArrowRight, HiShoppingCart } from 'react-icons/hi';
 import Link from 'next/link';
 import { AiOutlineLoading } from 'react-icons/ai';
-
-## Table of Contents
 
 The button component is a common UI component found on the web that allows users to trigger certain actions on your website such as submitting a form, navigating to a new page, or downloading a file.
 
@@ -18,6 +16,8 @@ In order to start using the button component you need to import it from Flowbite
 import { Button } from 'flowbite-react';
 ```
 
+## Table of Contents
+
 ## Default buttons
 
 Use this example to create a default button by using the `<Button>` component from React and by adding the `color` property you can change the color of the button.
@@ -27,6 +27,7 @@ Use this example to create a default button by using the `<Button>` component fr
   <Button color="ghost">Ghost</Button>
   <Button color="transparent">Transparent</Button>
   <Button color="info">Info</Button>
+  <Button color="blue">Blue</Button>
   <Button color="gray">Gray</Button>
   <Button color="dark">Dark</Button>
   <Button color="light">Light</Button>
@@ -41,6 +42,10 @@ Use this example to create a default button by using the `<Button>` component fr
 Add the `pill` property to the `<Button>` component to create a button with rounded corners.
 
 <CodePreview title="Button pills" className="flex flex-wrap gap-2">
+  <Button pill>Default</Button>
+  <Button color="blue" pill>
+    Blue
+  </Button>
   <Button color="gray" pill>
     Gray
   </Button>
@@ -249,7 +254,7 @@ The `as` prop provides you the ability to transform the `<Button />` component i
     <Button as="span" className="cursor-pointer">Span Button</Button>
   </div>
   <div>
-    <Button as={Link} href="#">
+    <Button as={Link} href="/">
       Next Link Button
     </Button>
   </div>
@@ -262,7 +267,7 @@ The `as` prop provides you the ability to transform the `<Button />` component i
       </Button>
     </div>
     <div>
-      <Button as={Link} href="#">
+      <Button as={Link} href="/">
         Next Link Button
       </Button>
     </div>

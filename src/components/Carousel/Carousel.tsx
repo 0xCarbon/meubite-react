@@ -51,6 +51,11 @@ export interface CarouselProps extends PropsWithChildren<ComponentProps<'div'>> 
   slideInterval?: number;
   theme?: DeepPartial<FlowbiteCarouselTheme>;
   onSlideChange?: (slide: number) => void;
+  pauseOnHover?: boolean;
+}
+
+export interface DefaultLeftRightControlProps extends PropsWithChildren<ComponentProps<'div'>> {
+  theme?: DeepPartial<FlowbiteCarouselTheme>;
 }
 
 export const Carousel: FC<CarouselProps> = ({
@@ -63,6 +68,7 @@ export const Carousel: FC<CarouselProps> = ({
   className,
   theme: customTheme = {},
   onSlideChange = null,
+  pauseOnHover = false,
   ...props
 }) => {
   const theme = mergeDeep(useTheme().theme.carousel, customTheme);
@@ -71,6 +77,7 @@ export const Carousel: FC<CarouselProps> = ({
   const carouselContainer = useRef<HTMLDivElement>(null);
   const [activeItem, setActiveItem] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const didMountRef = useRef(false);
 
@@ -103,12 +110,12 @@ export const Carousel: FC<CarouselProps> = ({
   }, [isDragging]);
 
   useEffect(() => {
-    if (slide) {
+    if (slide && !(pauseOnHover && isHovering)) {
       const intervalId = setInterval(() => !isDragging && navigateTo(activeItem + 1)(), slideInterval ?? 3000);
 
       return () => clearInterval(intervalId);
     }
-  }, [activeItem, isDragging, navigateTo, slide, slideInterval]);
+  }, [activeItem, isDragging, navigateTo, slide, slideInterval, pauseOnHover, isHovering]);
 
   useEffect(() => {
     if (didMountRef.current) {
@@ -120,8 +127,19 @@ export const Carousel: FC<CarouselProps> = ({
 
   const handleDragging = (dragging: boolean) => () => setIsDragging(dragging);
 
+  const setHoveringTrue = useCallback(() => setIsHovering(true), [setIsHovering]);
+  const setHoveringFalse = useCallback(() => setIsHovering(false), [setIsHovering]);
+
   return (
-    <div className={twMerge(theme.root.base, className)} data-testid="carousel" {...props}>
+    <div
+      className={twMerge(theme.root.base, className)}
+      data-testid="carousel"
+      onMouseEnter={setHoveringTrue}
+      onMouseLeave={setHoveringFalse}
+      onTouchStart={setHoveringTrue}
+      onTouchEnd={setHoveringFalse}
+      {...props}
+    >
       <ScrollContainer
         className={twMerge(theme.scrollContainer.base, (isDeviceMobile || !isDragging) && theme.scrollContainer.snap)}
         draggingClassName="cursor-grab"
@@ -165,7 +183,7 @@ export const Carousel: FC<CarouselProps> = ({
               type="button"
               aria-label="Previous slide"
             >
-              {leftControl ? leftControl : <DefaultLeftControl />}
+              {leftControl ? leftControl : <DefaultLeftControl theme={customTheme} />}
             </button>
           </div>
           <div className={theme.root.rightControl}>
@@ -176,7 +194,7 @@ export const Carousel: FC<CarouselProps> = ({
               type="button"
               aria-label="Next slide"
             >
-              {rightControl ? rightControl : <DefaultRightControl />}
+              {rightControl ? rightControl : <DefaultRightControl theme={customTheme} />}
             </button>
           </div>
         </>
@@ -185,8 +203,8 @@ export const Carousel: FC<CarouselProps> = ({
   );
 };
 
-const DefaultLeftControl: FC = () => {
-  const theme = useTheme().theme.carousel;
+const DefaultLeftControl: FC<DefaultLeftRightControlProps> = ({ theme: customTheme = {} }) => {
+  const theme = mergeDeep(useTheme().theme.carousel, customTheme);
   return (
     <span className={theme.control.base}>
       <HiOutlineChevronLeft className={theme.control.icon} />
@@ -194,8 +212,8 @@ const DefaultLeftControl: FC = () => {
   );
 };
 
-const DefaultRightControl: FC = () => {
-  const theme = useTheme().theme.carousel;
+const DefaultRightControl: FC<DefaultLeftRightControlProps> = ({ theme: customTheme = {} }) => {
+  const theme = mergeDeep(useTheme().theme.carousel, customTheme);
   return (
     <span className={theme.control.base}>
       <HiOutlineChevronRight className={theme.control.icon} />

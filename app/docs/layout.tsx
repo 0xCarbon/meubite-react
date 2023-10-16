@@ -1,5 +1,6 @@
 'use client';
 
+import { DocSearch } from '@docsearch/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -19,6 +20,8 @@ import '~/app/docs.css';
 import '~/app/style.css';
 import { Accordion, Badge, Flowbite, Footer, Navbar, Sidebar } from '~/src';
 import { isClient } from '~/src/helpers/is-client';
+import { Banner } from '../components/banner';
+import { CarbonAds } from '../components/carbon-ads';
 import { NavbarIcons, NavbarLinks } from '../components/navbar';
 
 interface DocsLayoutState {
@@ -53,6 +56,7 @@ const DocsLayout: NextPage<PropsWithChildren> = ({ children }) => {
     <Flowbite>
       <div className="w-full min-w-0 flex-auto lg:static lg:max-h-full lg:overflow-visible">
         <div className="relative max-h-screen w-full overflow-auto bg-white text-gray-600 antialiased dark:bg-gray-900 dark:text-gray-400">
+          <Banner />
           <DocsNavbar {...state} />
           <div className="lg:flex">
             <DocsSidebar {...state} />
@@ -61,6 +65,7 @@ const DocsLayout: NextPage<PropsWithChildren> = ({ children }) => {
                 <div className="pb:12 mx-auto flex min-w-0 max-w-4xl flex-col divide-y divide-gray-200 px-4 pt-6 dark:divide-gray-800 lg:px-8 lg:pb-16 lg:pt-8 xl:pb-24">
                   <main>{children}</main>
                   <DocsFooter />
+                  <CarbonAds />
                 </div>
                 <div className="right-0 hidden w-64 flex-none pl-8 xl:block xl:text-sm">
                   <div className="sticky top-20 flex h-[calc(100vh-5rem)] flex-col justify-between overflow-y-auto pb-6">
@@ -94,23 +99,23 @@ const DocsNavbar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
         },
       }}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center">
         {isCollapsed ? (
-          <span className="p-2 lg:hidden">
-            <HiMenuAlt1
-              aria-label="Open sidebar"
-              className="h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-300"
-              onClick={() => setCollapsed(!isCollapsed)}
-            />
-          </span>
+          <button
+            type="button"
+            className="-ml-3 mr-1 p-2 lg:ml-0 lg:mr-0 lg:hidden"
+            onClick={() => setCollapsed(!isCollapsed)}
+          >
+            <HiMenuAlt1 aria-label="Open sidebar" className="h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-300" />
+          </button>
         ) : (
-          <span className="rounded p-2 dark:bg-gray-700 lg:hidden">
-            <HiX
-              aria-label="Close sidebar"
-              className="h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-300"
-              onClick={() => setCollapsed(!isCollapsed)}
-            />
-          </span>
+          <button
+            type="button"
+            className="-ml-3 mr-1 rounded p-2 dark:bg-gray-700 lg:ml-0 lg:mr-0 lg:hidden"
+            onClick={() => setCollapsed(!isCollapsed)}
+          >
+            <HiX aria-label="Close sidebar" className="h-6 w-6 cursor-pointer text-gray-600 dark:text-gray-300" />
+          </button>
         )}
         <Link href="/" className="sr-only">
           Flowbite React
@@ -123,9 +128,14 @@ const DocsNavbar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
           <Image alt="" height={32} src="/favicon.svg" width={32} className="h-8 w-8" />
           <span>Flowbite React</span>
         </Link>
+        <div className="ml-4 hidden lg:flex">
+          <DocSearch appId="4ECQXWXLSO" indexName="flowbite-react" apiKey="9c32f687c9058e3d3f27adff654d48d9" />
+        </div>
       </div>
-      <NavbarLinks />
-      <NavbarIcons />
+      <div className="flex items-center">
+        <NavbarLinks />
+        <NavbarIcons />
+      </div>
     </Navbar>
   );
 };
@@ -144,7 +154,7 @@ const DocsSidebar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
     <>
       <div
         className={twMerge(
-          'fixed inset-0 z-50 h-full w-64 flex-none lg:static lg:block lg:h-auto lg:overflow-y-visible lg:pt-0',
+          'fixed inset-0 z-50 h-full w-64 flex-none border-r border-gray-200 dark:border-gray-600 lg:static lg:block lg:h-auto lg:overflow-y-visible lg:pt-6',
           isCollapsed && 'hidden',
         )}
       >
@@ -154,7 +164,7 @@ const DocsSidebar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
             root: {
               base: 'h-full border-r border-gray-200 dark:border-gray-600',
               inner:
-                'overflow-y-auto px-4 pt-20 lg:pt-0 h-full bg-white scrolling-touch max-w-2xs lg:h-[calc(100vh-8rem)] lg:block dark:bg-gray-900 dark:hover:bg-transparent lg:mr-0 lg:sticky top-20 font-normal text-base lg:text-sm',
+                'overflow-y-auto px-4 pt-20 lg:pt-0 h-full bg-white scrolling-touch max-w-2xs lg:h-[calc(100vh-8rem)] lg:block dark:bg-gray-900 lg:mr-0 lg:sticky top-20 font-normal text-base lg:text-sm',
             },
           }}
         >
@@ -244,14 +254,39 @@ const DocsSidebar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
                     <SidebarLink href="/docs/components/alert">Alert</SidebarLink>
                     <SidebarLink href="/docs/components/avatar">Avatar</SidebarLink>
                     <SidebarLink href="/docs/components/badge">Badge</SidebarLink>
+                    <SidebarLink href="/docs/components/banner">
+                      <span className="flex items-center gap-2">
+                        Banner{' '}
+                        <Badge color="cyan" className="px-2">
+                          New
+                        </Badge>
+                      </span>
+                    </SidebarLink>
+                    <SidebarLink href="/docs/components/blockquote">Blockquote</SidebarLink>
                     <SidebarLink href="/docs/components/breadcrumb">Breadcrumb</SidebarLink>
                     <SidebarLink href="/docs/components/button">Button</SidebarLink>
                     <SidebarLink href="/docs/components/button-group">Button group</SidebarLink>
                     <SidebarLink href="/docs/components/card">Card</SidebarLink>
                     <SidebarLink href="/docs/components/carousel">Carousel</SidebarLink>
+                    <SidebarLink href="/docs/components/datepicker">
+                      <span className="flex items-center gap-2">
+                        Datepicker{' '}
+                        <Badge color="cyan" className="px-2">
+                          New
+                        </Badge>
+                      </span>
+                    </SidebarLink>
                     <SidebarLink href="/docs/components/dropdown">Dropdown</SidebarLink>
                     <SidebarLink href="/docs/components/footer">Footer</SidebarLink>
                     <SidebarLink href="/docs/components/forms">Forms</SidebarLink>
+                    <SidebarLink href="/docs/components/kbd">
+                      <span className="flex items-center gap-2">
+                        KDB{' '}
+                        <Badge color="cyan" className="px-2">
+                          New
+                        </Badge>
+                      </span>
+                    </SidebarLink>
                     <SidebarLink href="/docs/components/list-group">List group</SidebarLink>
                     <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
                     <SidebarLink href="/docs/components/navbar">Navbar</SidebarLink>
@@ -265,6 +300,69 @@ const DocsSidebar: FC<DocsLayoutState> = ({ isCollapsed, setCollapsed }) => {
                     <SidebarLink href="/docs/components/timeline">Timeline</SidebarLink>
                     <SidebarLink href="/docs/components/toast">Toast</SidebarLink>
                     <SidebarLink href="/docs/components/tooltip">Tooltip</SidebarLink>
+                  </Sidebar.ItemGroup>
+                </Accordion.Content>
+              </Accordion.Panel>
+            </Accordion>
+            <Accordion collapseAll={!pathname.includes('/forms/')} flush className="border-none">
+              <Accordion.Panel>
+                <Accordion.Title
+                  theme={{
+                    open: {
+                      on: 'mb-2 text-primary-700 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-500',
+                      off: 'mb-1 text-gray-900 dark:text-white hover:text-primary-700 dark:hover:text-primary-500',
+                    },
+                  }}
+                  className={twMerge(
+                    'flex w-full items-center justify-between bg-transparent p-0 text-sm font-semibold uppercase tracking-wide',
+                    pathname.includes('/forms/') &&
+                      'text-primary-700 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-500',
+                  )}
+                >
+                  Forms
+                </Accordion.Title>
+                <Accordion.Content className="mb-2 border-none p-0">
+                  <Sidebar.ItemGroup className="border-none">
+                    <SidebarLink href="/docs/forms/floating-label">
+                      <span className="flex items-center gap-2">
+                        Floating Label{' '}
+                        <Badge color="cyan" className="px-2">
+                          New
+                        </Badge>
+                      </span>
+                    </SidebarLink>
+                  </Sidebar.ItemGroup>
+                </Accordion.Content>
+              </Accordion.Panel>
+            </Accordion>
+
+            <Accordion collapseAll={!pathname.includes('/docs/typography/')} flush className="border-none">
+              <Accordion.Panel>
+                <Accordion.Title
+                  theme={{
+                    open: {
+                      on: 'mb-2 text-primary-700 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-500',
+                      off: 'mb-1 text-gray-900 dark:text-white hover:text-primary-700 dark:hover:text-primary-500',
+                    },
+                  }}
+                  className={twMerge(
+                    'flex w-full items-center justify-between bg-transparent p-0 text-sm font-semibold uppercase tracking-wide',
+                    pathname.includes('/docs/typography/') &&
+                      'text-primary-700 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-500',
+                  )}
+                >
+                  Typography
+                </Accordion.Title>
+                <Accordion.Content className="mb-2 space-y-0.5 border-none p-0">
+                  <Sidebar.ItemGroup className="border-none">
+                    <SidebarLink href="/docs/typography/blockquote">
+                      <span className="flex items-center gap-2">
+                        Blockquote{' '}
+                        <Badge color="cyan" className="px-2">
+                          New
+                        </Badge>
+                      </span>
+                    </SidebarLink>
                   </Sidebar.ItemGroup>
                 </Accordion.Content>
               </Accordion.Panel>
