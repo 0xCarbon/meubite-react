@@ -62,6 +62,7 @@ export const tabTheme: FlowbiteTabTheme = {
       underline: '',
       pills: '',
       fullWidth: '',
+      rounded: '',
     },
   },
   tabpanel: 'py-3',
