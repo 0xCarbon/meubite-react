@@ -6,11 +6,11 @@ export const buttonTheme: FlowbiteButtonTheme = {
   fullSized: 'w-full',
   color: {
     default:
-      'text-white bg-alr-red border border-transparent hover:bg-red-900 focus:ring-2 focus:ring-red-300 disabled:hover:bg-red-900 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
+      'text-white duration-300 bg-alr-red hover:bg-alr-dark-red border border-transparent focus:ring-2 focus:ring-red-300 disabled:hover:bg-red-900 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 dark:disabled:hover:bg-red-600',
     ghost:
-      'text-gray-900 bg-[#F5F5F5] border-transparent outline-none hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
+      'text-gray-900 duration-300 bg-[#F5F5F5] border-transparent outline-none hover:shadow-md focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
     transparent:
-      'text-gray-900 bg-transparent border-transparent outline-none hover:bg-[#F5F5F5] hover:shadow-[0_0_8px_rgba(0,0,0,0.15)] focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
+      'text-gray-900 duration-300 bg-transparent border-transparent outline-none hover:bg-[#F5F5F5] hover:shadow-md focus:ring-transparent disabled:hover:bg-white dark:bg-transparent dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800',
     dark: 'text-white bg-gray-800 border border-transparent enabled:hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:enabled:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700',
     failure:
       'text-white bg-red-700 border border-transparent enabled:hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:enabled:hover:bg-red-700 dark:focus:ring-red-900',
