@@ -5,7 +5,7 @@ export const spinnerTheme: FlowbiteSpinnerTheme = {
   color: {
     failure: 'fill-red-600',
     gray: 'fill-gray-600',
-    info: 'fill-cyan-600',
+    info: 'fill-alr-red',
     pink: 'fill-pink-600',
     purple: 'fill-purple-600',
     success: 'fill-green-500',

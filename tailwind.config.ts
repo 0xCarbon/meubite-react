@@ -7,6 +7,7 @@ const config: Config = {
     extend: {
       colors: {
         'alr-red': '#E64848',
+        'alr-dark-red': '#cf3232',
         'alr-grey': '#303030',
         'alr-white': '#F5F5F5',
         primary: {
